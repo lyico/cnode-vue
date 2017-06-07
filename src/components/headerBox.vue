@@ -6,7 +6,7 @@
           <img src="//o4j806krb.qnssl.com/public/images/cnodejs_light.svg">
         </a>
         <ul class="nav f-r">
-          <li><a href="#">首页</a></li>
+          <li><router-link to="home">首页</router-link></li>
         </ul>
       </div>
     </div>
@@ -24,7 +24,6 @@ export default {
   font-size: 13px;
   .container {
     width: 100%;
-    min-width: 960px;
     margin: 0 auto;
     max-width: 1400px;
   }
