@@ -1,21 +1,43 @@
 <template>
   <ul class="lists-box">
-      <li>
+      <li v-for="(item,index) in data">
         <router-link class="user_avatar f-l" to="">
-            <img src="" alt="">
+            <img :src="item.author.avatar_url" :title="item.author.loginname">
         </router-link>
         <span class="reply_count f-l">
-            <span class="count_of_replies" title="回复数">82</span>
+            <span class="count_of_replies" title="回复数">{{item.reply_count}}</span>
             <span class="count_seperator">/</span>
-            <span class="count_of_visits" title="点击数">23333</span>
+            <span class="count_of_visits" title="点击数">{{item.visit_count}}</span>
         </span>
-        
-      </li>
+        <a href="#" class="last_time f-r">
+            <span class="last_active_time">{{formatDate(item.last_reply_at)}}</span>
+        </a>
+        <div class="topic-title-box">
+            <span class="topiclist-tab">置顶</span>
+            <a href="#" class="topic_title">{{item.title}}</a>
+        </div>
+    </li>
   </ul>
 </template>
 
 <script>
+import *as com from "@/util/common";
+
 export default {
+    props:{
+        data:{
+            type: Array,
+            default:function(){
+
+            }
+        }
+    },
+    updated(){
+        console.log(com.formatDate(this.data[0].last_reply_at))
+    },
+    methods:{
+        formatDate:(time) => com.formatDate(time),
+    }
   
 }
 </script>
@@ -24,10 +46,17 @@ export default {
 .lists-box{
     background-color:#fff;
     li{
-        padding: 10px 0 10px 10px;
+        padding: 10px;
         font-size: 14px;
         overflow: hidden;
         line-height: 2em;
+        border-top: 1px solid #f0f0f0;
+        .topic-title-box{
+            text-overflow: ellipsis;
+            max-width: 70%;
+            white-space: nowrap;
+            overflow: hidden;
+        }
         .reply_count{
             width: 70px;
             display: inline-block;
@@ -43,6 +72,20 @@ export default {
         .count_of_visits{
             font-size: 10px;
             color: #b4b4b4;
+        }
+        .last_time{
+            color: #778087;
+            font-size: 12px;
+        }
+        .user_small_avatar{
+            height: 18px;
+            width: 18px;
+            vertical-align: middle;
+            margin-right: .5em;
+            border-radius: 3px;
+        }
+        &:hover{
+            background-color: #f5f5f5;
         }
     }
 }

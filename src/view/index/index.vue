@@ -1,16 +1,17 @@
 <template>
   <div class="panel">
       <div class="header">
-          <router-link v-for="(item,index) in tabLists" :to="{query: { tab: item.query }}" class="topic-tab" :class="$route.query.tab == item.query ? 'current-tab' : ''" :key="index">{{item.name}}</router-link>
+          <router-link v-for="(item,index) in tabLists" :to="{query: { tab: item.query }}" class="topic-tab" :class="$route.query.tab == item.query || (index == 0 && !$route.query.tab) ? 'current-tab' : ''" :key="index">{{item.name}}</router-link>
       </div>
       <div class="inner">
-          <listItemBox></listItemBox>
+          <listItemBox :data="listData"></listItemBox>
       </div>
   </div>
 </template>
 
 <script>
 import listItemBox from "@/components/listItemBox";
+import * as api from "@/api/api";
 
 export default {
     data(){
@@ -23,10 +24,25 @@ export default {
                 {name:"招聘", query:"job"},
                 {name:"客户端测试", query:"dev"},
                 ],
-
+            listData:[],
         }
     },
     components:{ listItemBox },
+    created(){
+        this.getData();
+    },
+    methods:{
+        getData: function(){
+           api.getTopicsList({tab:this.$route.query.tab}).then(res=>{
+                if(res.success){
+                    this.listData=res.data;
+                }
+            })
+        }
+    },
+    watch:{
+        "$route":"getData"
+    }
 }
 </script>
 
