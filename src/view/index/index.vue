@@ -5,12 +5,14 @@
       </div>
       <div class="inner">
           <listItemBox :data="listData"></listItemBox>
+          <pagination @updata="clickPage" :current-page="reqData.page" :total="800"></pagination>
       </div>
   </div>
 </template>
 
 <script>
 import listItemBox from "@/components/listItemBox";
+import pagination from "@/components/pagination";
 import * as api from "@/api/api";
 
 export default {
@@ -25,19 +27,27 @@ export default {
                 {name:"客户端测试", query:"dev"},
                 ],
             listData:[],
+            reqData:{
+                page: 1,
+                tab: this.$route.query.tab
+            }
         }
     },
-    components:{ listItemBox },
+    components:{ listItemBox, pagination },
     created(){
         this.getData();
     },
     methods:{
         getData: function(){
-           api.getTopicsList({tab:this.$route.query.tab}).then(res=>{
+           api.getTopicsList(this.reqData).then(res=>{
                 if(res.success){
                     this.listData=res.data;
                 }
             })
+        },
+        clickPage:function(num){
+            this.reqData.page=num;
+            this.getData();
         }
     },
     watch:{

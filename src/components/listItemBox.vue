@@ -32,9 +32,6 @@ export default {
             }
         }
     },
-    updated(){
-        console.log(com.formatDate(this.data[0].last_reply_at))
-    },
     methods:{
         formatDate:(time) => com.formatDate(time),
     }
