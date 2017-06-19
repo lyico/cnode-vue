@@ -13,8 +13,9 @@
             <span class="last_active_time">{{formatDate(item.last_reply_at)}}</span>
         </a>
         <div class="topic-title-box">
-            <span class="topiclist-tab">置顶</span>
-            <a href="#" class="topic_title">{{item.title}}</a>
+            <span class="topiclist-tab" v-if="!item.good && !item.top && item.tab!=='dev'">{{classify[item.tab]}}</span>
+            <span class="topiclist-tab top" v-if="item.good || item.top">{{item.top ? '置顶':'精华'}}</span>
+            <router-link :to="{ path: '/topic', query: { id: item.id }}">{{item.title}}</router-link>
         </div>
     </li>
   </ul>
@@ -29,6 +30,16 @@ export default {
             type: Array,
             default:function(){
 
+            }
+        }
+    },
+    data(){
+        return {
+            classify:{
+                ask:'问答',
+                good:'精华',
+                share:'分享',
+                job:'招聘'
             }
         }
     },

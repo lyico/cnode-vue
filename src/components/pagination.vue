@@ -7,7 +7,7 @@
                 {{pager}}
           </li>
           <li v-if="showMoreNext" class="quicknext"  @click="goNum(currentNum+5)">...</li>
-          <li class="btn-prev" :class="{'disabled': currentNum === page}"  @click="goNum(currentNum-1)">></li>
+          <li class="btn-prev" :class="{'disabled': currentNum === page}"  @click="goNum(currentNum+1)">></li>
       </ul>
   </div>
 </template>
@@ -70,12 +70,19 @@ export default {
   },
   methods:{
       goNum:function(num){
+        document.body.scrollTop = 0
+        document.documentElement.scrollTop = 0
         const pageNum = this.currentNum;
         this.currentNum = num;
         if(this.currentNum<1) this.currentNum=1;
         if(this.currentNum>this.page) this.currentNum = this.page;
         if(this.currentNum ==pageNum) return;
          this.$emit('updata', this.currentNum);
+      }
+  },
+  watch:{
+      currentPage: function (val, oldVal) {
+            this.currentNum=val;
       }
   }
 }

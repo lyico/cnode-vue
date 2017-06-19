@@ -4,10 +4,13 @@ import Router from 'vue-router';
 Vue.use(Router);
 
 export default new Router({
-  routes: [
-    {
+  routes: [{
       path: '/',
-      component : require('@/view/index/index'),
+      component: require('@/view/index/index'),
     },
+    {
+      path: '/topic',
+      component: require('@/view/articleDetails/index'),
+    }
   ],
 });

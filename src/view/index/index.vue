@@ -5,7 +5,7 @@
       </div>
       <div class="inner">
           <listItemBox :data="listData"></listItemBox>
-          <pagination @updata="clickPage" :current-page="reqData.page" :total="800"></pagination>
+          <pagination @updata="clickPage" :current-page="page" :total="800"></pagination>
       </div>
   </div>
 </template>
@@ -24,13 +24,10 @@ export default {
                 {name:"分享", query:"share"},
                 {name:"问答", query:"ask"},
                 {name:"招聘", query:"job"},
-                {name:"客户端测试", query:"dev"},
+                // {name:"客户端测试", query:"dev"},
                 ],
             listData:[],
-            reqData:{
-                page: 1,
-                tab: this.$route.query.tab
-            }
+            page:1
         }
     },
     components:{ listItemBox, pagination },
@@ -39,19 +36,21 @@ export default {
     },
     methods:{
         getData: function(){
-           api.getTopicsList(this.reqData).then(res=>{
+           api.getTopicsList({page:this.page,tab: this.$route.query.tab}).then(res=>{
                 if(res.success){
                     this.listData=res.data;
                 }
             })
         },
         clickPage:function(num){
-            this.reqData.page=num;
+            this.page=num;
             this.getData();
         }
     },
     watch:{
-        "$route":"getData"
+        "$route":function(){
+            this.clickPage(1);
+        }
     }
 }
 </script>

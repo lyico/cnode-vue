@@ -30,4 +30,4 @@ export const getTopicsList = (data) => getData('topics', data);
  * 得到 主题详情
  * @param {any} data 
  */
-export const getTopicDetails = (data) => getData('topics/' + data);
+export const getTopicDetails = (data) => getData('topic/' + data);
