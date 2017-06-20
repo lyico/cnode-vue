@@ -11,6 +11,10 @@ export default new Router({
     {
       path: '/topic',
       component: require('@/view/articleDetails/index'),
+    },
+    {
+      path: '/login',
+      component: require('@/view/login/index'),
     }
   ],
 });

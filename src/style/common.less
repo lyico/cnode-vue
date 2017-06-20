@@ -1,3 +1,5 @@
+@unify-w-h:16px;
+
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
@@ -81,4 +83,43 @@ ul{
   cursor: pointer;
   font-size: 14px;
   padding: 3px 10px;
+}
+.ico{
+  display: inline-block;
+  &.unify{
+    width: @unify-w-h;
+    height:@unify-w-h;
+  }
+  &-reply{
+    background-image: url(../img/reply.png);
+    cursor: pointer;
+  }
+  &-like{
+    background-image: url(../img/like.png);
+    cursor: pointer;
+  }
+}
+.editor-toolbar{
+        background-color: #fff;
+}
+.span-primary, .span-success{
+    border: none;
+    display: inline-block;
+    float: none;
+    padding: 3px 10px;
+    margin: 0;
+    font-size: 14px;
+    transition: all .2s ease-in-out;
+    letter-spacing: 2px;
+    box-shadow: none;
+    line-height: 2em;
+    vertical-align: middle;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 3px;
+    background-color: #08c;
+    &:hover{
+      color: #fff;
+      background-color: #05c;
+    }
 }

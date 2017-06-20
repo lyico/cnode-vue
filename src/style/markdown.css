@@ -75,3 +75,27 @@ textarea#title {
 .markdown_editor.in_preview .markdown_in_preview {
     display: block
 }
+
+div pre.prettyprint {
+    font-size: 14px;
+    border-radius: 0;
+    padding: 0 15px;
+    border: none;
+    margin: 20px -10px;
+    border-width: 1px 0;
+    background: #f7f7f7;
+    -o-tab-size: 4;
+    -moz-tab-size: 4;
+    tab-size: 4;
+}
+
+.str {
+    color: #080;
+}
+
+pre code {
+    color: inherit;
+    white-space: pre-wrap;
+    background-color: transparent;
+    word-wrap: break-word
+}
