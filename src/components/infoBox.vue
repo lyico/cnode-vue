@@ -37,6 +37,9 @@ import { mapGetters } from 'vuex';
                 }
             })
          }
+     },
+     watch:{
+        'userName':'getUserInfo'
      }
 };
 </script>
