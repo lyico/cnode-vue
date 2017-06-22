@@ -1,10 +1,10 @@
 <template>
   <ul class="lists-box">
       <li v-for="(item,index) in data">
-        <router-link class="user_avatar f-l" to="">
+        <router-link class="user_avatar f-l" :to="{ name: 'user', params: { name: item.author.loginname }}">
             <img :src="item.author.avatar_url" :title="item.author.loginname">
         </router-link>
-        <span class="reply_count f-l">
+        <span class="reply_count f-l" v-if="!type == 'synopsis'">
             <span class="count_of_replies" title="回复数">{{item.reply_count}}</span>
             <span class="count_seperator">/</span>
             <span class="count_of_visits" title="点击数">{{item.visit_count}}</span>
@@ -13,8 +13,10 @@
             <span class="last_active_time">{{formatDate(item.last_reply_at)}}</span>
         </a>
         <div class="topic-title-box">
-            <span class="topiclist-tab" v-if="!item.good && !item.top && item.tab!=='dev'">{{classify[item.tab]}}</span>
-            <span class="topiclist-tab top" v-if="item.good || item.top">{{item.top ? '置顶':'精华'}}</span>
+            <template v-if="item.tab">
+                <span class="topiclist-tab" v-if="!item.good && !item.top && item.tab!=='dev'">{{classify[item.tab]}}</span>
+                <span class="topiclist-tab top" v-if="item.good || item.top">{{item.top ? '置顶':'精华'}}</span>
+            </template>
             <router-link :to="{ path: '/topic', query: { id: item.id }}">{{item.title}}</router-link>
         </div>
     </li>
@@ -31,6 +33,10 @@ export default {
             default:function(){
 
             }
+        },
+        type:{
+            type:String,
+            default:"details"
         }
     },
     data(){

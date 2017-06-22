@@ -2,7 +2,7 @@
   <div class="navbar">
     <div class="navbar-inner">
       <div class="container">
-        <a class="brand f-l" href="/">
+        <a class="brand f-l" href="#/">
           <img src="//o4j806krb.qnssl.com/public/images/cnodejs_light.svg">
         </a>
         <ul class="nav f-r">

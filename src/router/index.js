@@ -15,6 +15,11 @@ export default new Router({
     {
       path: '/login',
       component: require('@/view/login/index'),
+    },
+    {
+      name:'user',
+      path: '/user/:name',
+      component: require('@/view/user/index'),
     }
   ],
 });

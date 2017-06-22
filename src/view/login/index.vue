@@ -25,7 +25,7 @@
 <script>
 import * as api from "@/api/api";
 import { mapMutations } from 'vuex';
-
+let Cookies = require('js-cookie');
 
 export default {
   data(){
@@ -45,6 +45,7 @@ export default {
                 delete userInfo.success;
                 this.setUserInfo(userInfo);
                 this.setRightName(res.loginname);
+                Cookies.set('name', res.loginname);
                 this.$router.push({ path: '/' });
            }else{
            

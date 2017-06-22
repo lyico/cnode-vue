@@ -3,7 +3,7 @@
     <headerBox></headerBox>
     <div id="main">
       <div class="main-right">
-        <infoBox v-show="userName.length>0"></infoBox>
+        <infoBox></infoBox>
       </div>
       <div class="main-left">
         <router-view></router-view>
@@ -15,15 +15,9 @@
 <script>
 import headerBox from '@/components/headerBox';
 import infoBox from '@/components/infoBox';
-import { mapGetters } from 'vuex';
 
 export default {
   components: { headerBox, infoBox },
-  computed:{
-      ...mapGetters({
-             userName: 'getRightName'
-      })
-  },
 };
 </script>
 
