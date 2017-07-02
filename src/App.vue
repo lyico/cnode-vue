@@ -15,6 +15,7 @@
 <script>
 import headerBox from '@/components/headerBox';
 import infoBox from '@/components/infoBox';
+import { mapMutations } from 'vuex';
 
 export default {
   components: { headerBox, infoBox },

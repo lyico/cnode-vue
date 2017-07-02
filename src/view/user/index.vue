@@ -7,7 +7,7 @@
           <div class="inner">
               <div class="user-card">
                    <p>
-                        <span class="user_avatar"><img :src="UserData.avatar_url"/></span>
+                        <span class="user_avatar"><img :src="UserData.avatar_url"></span>
                         <span class="user-name">{{UserData.loginname}}</span>
                     </p>
                     <p class="p-10">{{UserData.score}}  积分</p>
@@ -34,6 +34,7 @@
 import * as api from "@/api/api";
 import * as com from "@/util/common";
 import listItemBox from "@/components/listItemBox";
+import {  mapMutations } from 'vuex';
 
 export default {
   data(){
@@ -46,11 +47,15 @@ export default {
   },
   components: { listItemBox },
   methods:{ 
+       ...mapMutations({
+             setRightName: 'COM_SET_RIGHTUSERNAME'
+         }),
        formatDate: (time) => com.formatDate(time),
        getUserInfo(){
             api.getRightUserInfo(this.$route.params.name).then( res => {
                 if(res.success){
                     this.UserData = res.data;
+                    this.setRightName(res.data.loginname);
                 }
             })
          }

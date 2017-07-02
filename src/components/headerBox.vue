@@ -2,11 +2,17 @@
   <div class="navbar">
     <div class="navbar-inner">
       <div class="container">
-        <a class="brand f-l" href="#/">
+        <router-link to="/" class="brand f-l">
           <img src="//o4j806krb.qnssl.com/public/images/cnodejs_light.svg">
-        </a>
+        </router-link>
         <ul class="nav f-r">
-          <li><router-link to="home">首页</router-link></li>
+          <li><router-link to="/">首页</router-link></li>
+          <li v-if="!getToken.length"><router-link to="/login">登录</router-link></li>
+          <template v-else-if="getToken.length">
+             <li><router-link to="/create">发布话题</router-link></li>
+             <li><router-link to="/msg">未读消息</router-link></li>
+             <li><a @click="logOut" href="javascript:void(0)">退出</a></li>
+          </template>
         </ul>
       </div>
     </div>
@@ -14,7 +20,21 @@
 </template>
 
 <script>
+import { mapGetters ,mapMutations  } from 'vuex';
+
 export default {
+  computed:{
+    ...mapGetters([
+      'getToken',
+      'getRightName',
+      'getLoginUser'
+    ])
+  },
+  methods:{
+    ...mapMutations({
+          logOut:'COM_USER_LOGOUT',
+      })
+  }
 };
 </script>
 <style lang="less" scoped>
@@ -52,6 +72,10 @@ export default {
       color: #ccc;
       padding: 10px 15px;
       text-decoration: none;
+      display: inline-block;
+    }
+    li{
+      display: inline-block;
     }
   }
 }

@@ -1,25 +1,57 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import store from '@/vuex/store';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   routes: [{
       path: '/',
-      component: require('@/view/index/index'),
+      component: resolve => require(['@/view/index/index.vue'], resolve),
     },
     {
       path: '/topic',
-      component: require('@/view/articleDetails/index'),
+      component: resolve => require(['@/view/articleDetails/index.vue'], resolve),
     },
     {
       path: '/login',
-      component: require('@/view/login/index'),
+      component: resolve => require(['@/view/login/index.vue'], resolve),
     },
     {
       name:'user',
       path: '/user/:name',
-      component: require('@/view/user/index'),
+      component: resolve => require(['@/view/user/index.vue'], resolve),
+    },
+    {
+      name:'msg',
+      path: '/msg',
+      component: resolve => require(['@/view/msg/index.vue'], resolve),
+      meta: {
+        requireAuth: true, 
+      },
+    },
+    {
+      name:'create',
+      path: '/create',
+      component: resolve => require(['@/view/newTopic/index.vue'], resolve),
+      meta: {
+        requireAuth: true,
+      },
     }
   ],
+  scrollBehavior (to, from, savedPosition) {
+    return { x: 0, y: 0 }
+  }
 });
+
+
+router.beforeEach((to, from, next) => {
+    if (to.meta.requireAuth) { // 判断该路由是否需要登录权限
+       const token = store.getters.getToken;
+      token.length ? next():next({path: '/login',query: { redirect: to.fullPath }});
+    } else {
+        next();
+    }
+})
+
+export default router;

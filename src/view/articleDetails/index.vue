@@ -10,7 +10,10 @@
                     <span>作者{{detailsData.author ? detailsData.author.loginname : ''}}</span>
                     <span>{{detailsData.visit_count}}次浏览</span>
                     <span>来自</span>
-                    <p class=" topiclist-tab top collect-btn f-r">收藏</p>
+                    <template v-if="getToken.length">
+                        <p class=" topiclist-tab top collect-btn f-r" v-if="!detailsData.is_collect" @click="collect('collect')">收藏</p>
+                        <p class=" topiclist-tab  collect-btn f-r collect-de" v-else-if="detailsData.is_collect" @click="collect('de')">取消收藏</p>
+                    </template>
                 </div>
             </div>
             <div class="inner topic">
@@ -21,7 +24,7 @@
             <div class="header">{{detailsData.reply_count}} 回复</div>
             <div class="inner">
                 <ul>
-                    <li class="reply-item" v-for="(item,index) in detailsData.replies">
+                    <li class="reply-item" v-for="(item,index) in detailsData.replies" :key="index">
                         <div class="author_content">
                             <a href="#" class="user_avatar">
                                 <img :src="item.author.avatar_url">
@@ -62,6 +65,7 @@ import * as api from '@/api/api';
 import *as com from "@/util/common";
 import '@/style/markdown.css';
 import { markdownEditor } from 'vue-simplemde';
+import {  mapMutations ,mapGetters } from 'vuex';
 
 export default {
     components: {
@@ -77,6 +81,7 @@ export default {
         }
     },
     computed: {
+        ...mapGetters(['getToken']),
         simplemde() {
             return this.$refs.markdownEditor.simplemde
         }
@@ -85,17 +90,50 @@ export default {
         this.getData();
     },
     methods:{
+        ...mapMutations({
+             setRightName: 'COM_SET_RIGHTUSERNAME'
+         }),
         formatDate: (time) => com.formatDate(time),
-        getData:function(){
-            api.getTopicDetails(this.$route.query.id).then(res=>{
+        getData(){
+            let data = {
+                id:this.$route.query.id
+            };
+            if(this.getToken.length) data.token = {accesstoken:this.getToken};
+            api.getTopicDetails(data).then(res=>{
                 if(res.success){
                     this.detailsData = res.data;
-                    console.log(this.detailsData)
+                    this.setRightName(res.data.author.loginname)
                 }
             })
         },
-        sendReply:function(){
-            console.log(this.simplemde.markdown(this.content))
+        sendReply(){
+            api.postReplies(this.$route.query.id,{accesstoken: this.getToken,content: this.content}).then(res =>{
+                if(res.success){
+                    this.$router.go(0)
+                }else{
+                    
+                }
+            })
+        },
+        collect(type){
+            let dataObj = {
+                accesstoken: this.getToken,
+                topic_id: this.$route.query.id
+            }
+            console.log(dataObj)
+            if(type === 'collect'){
+                api.topicCollect(dataObj).then(res =>{
+                    if(res.success){
+                        this.detailsData.is_collect=true;
+                    }
+                })
+            }else if(type === 'de'){
+                 api.topicDeCollect(dataObj).then(res =>{
+                    if(res.success){
+                        this.detailsData.is_collect=false;
+                    }
+                })
+            }
         }
     }
 }

@@ -1,2 +1,3 @@
-export const COM_SET_USERINFO = 'COM_SET_USERINFO'; //设置用户信息
-export const COM_SET_RIGHTUSERNAME = 'COM_SET_RIGHTUSERNAME'; //设置右侧展示用户名
+export const COM_USER_LOGIN = 'COM_USER_LOGIN'; //用户登录
+export const COM_USER_LOGOUT = 'COM_USER_LOGOUT'; //用户退出
+export const COM_SET_RIGHTUSERNAME = 'COM_SET_RIGHTUSERNAME';//设置右侧用户名

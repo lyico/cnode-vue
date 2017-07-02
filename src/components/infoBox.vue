@@ -1,22 +1,22 @@
 <template>
   <div>
-      <div class="panel" v-show="userName.length > 0">
+      <div class="panel" v-if="userName.length > 0">
         <div class="header">
-            <span class="info-title">个人信息</span>
+            <span class="info-title">{{loginUser == userName ?  '个人信息' : 'ta的信息'}}</span>
         </div>
         <div class="inner">
             <div class="user-card">
                 <p>
-                    <a href="#" class="user_avatar">
-                        <img :src="userInfo.avatar_url" :title="userInfo.loginname"/>
+                    <a href="javascript:void(0)" class="user_avatar">
+                        <img :src="userInfo.avatar_url" :title="userInfo.loginname">
                     </a>
-                    <span class="user-name"><a href="#">{{userInfo.loginname}}</a></span>
+                    <span class="user-name"><a href="javascript:void(0)">{{userInfo.loginname}}</a></span>
                 </p>
                 <p class="p-10">积分： {{userInfo.score}}</p>
             </div>
         </div>
     </div>
-    <div class="panel" v-show="userName.length == 0">
+    <div class="panel" v-if="userName.length == 0">
         <div class="inner">
            <div class="login-box">
                 <a href="#/login" class="span-primary">登录</a>
@@ -28,7 +28,6 @@
 <script>
 import * as api from "@/api/api";
 import { mapGetters , mapMutations } from 'vuex';
-let Cookies = require('js-cookie');
 
  export default {
      data(){
@@ -38,13 +37,9 @@ let Cookies = require('js-cookie');
      },
      computed:{
          ...mapGetters({
-             userName: 'getRightName'
+             userName: 'getRightName',
+             loginUser: 'getLoginUser'
          })
-     },
-     created(){
-         if(Cookies.get('name')){
-            this.setRightName(Cookies.get('name'));
-         }
      },
      methods:{
         ...mapMutations({

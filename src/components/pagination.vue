@@ -3,7 +3,7 @@
       <ul class="pager">
           <li class="btn-prev" :class="{'disabled': currentNum === 1}" @click="goNum(currentNum-1)"><</li>
           <li v-if="showMorePrev" class="quickprev" @click="goNum(currentNum-5)">...</li>
-          <li class="number" v-for="pager in pagers" :class="{'active': pager == currentNum }" @click="goNum(pager)">
+          <li class="number" v-for="pager in pagers" :class="{'active': pager == currentNum }" @click="goNum(pager)" :key="pager">
                 {{pager}}
           </li>
           <li v-if="showMoreNext" class="quicknext"  @click="goNum(currentNum+5)">...</li>
