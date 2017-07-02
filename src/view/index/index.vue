@@ -51,6 +51,8 @@ export default {
            api.getTopicsList({page:this.page,tab: this.$route.query.tab}).then(res=>{
                 if(res.success){
                     this.listData=res.data;
+                }else{
+                     console.log('获取数据失败！');
                 }
             })
         },

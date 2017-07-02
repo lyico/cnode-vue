@@ -70,6 +70,8 @@ export default {
                 api.createTopic(this.CreateData).then( res =>{
                     if(res.success){
                         this.$router.push({path: '/topic',query:{ id: res.topic_id}});
+                    }else{
+                         console.log('创建失败！');
                     }
                 })
             }

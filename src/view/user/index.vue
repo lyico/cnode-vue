@@ -56,6 +56,8 @@ export default {
                 if(res.success){
                     this.UserData = res.data;
                     this.setRightName(res.data.loginname);
+                }else{
+                     console.log('数据获取失败！');
                 }
             })
          }

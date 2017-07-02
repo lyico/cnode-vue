@@ -48,6 +48,8 @@ export default {
         api.getMsgData({ "accesstoken":this.getToken }).then(res=>{
           if(res.success){
             this.msgData = res.data;
+          }else{
+             console.log('数据获取失败！');
           }
         })
       }

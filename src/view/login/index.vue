@@ -24,13 +24,21 @@
 
 <script>
 import * as api from "@/api/api";
-import { mapMutations } from 'vuex';
+import { mapMutations ,mapGetters  } from 'vuex';
 
 export default {
   data(){
       return {
           accesstoken:''
       }
+  },
+  created(){
+    this.setRightName(this.getLoginUser);
+  },
+  computed:{
+        ...mapGetters([
+            'getLoginUser'
+        ])
   },
   methods:{
       ...mapMutations({
@@ -50,7 +58,7 @@ export default {
                 if(!url) url='/';
                 this.$router.push({ path: url });
            }else{
-           
+                console.log('登录失败');
            }
         })
      } 
@@ -60,16 +68,18 @@ export default {
 
 <style lang="less" scoped>
     .login-box{
-        padding: 50px 10px;
+        padding: 50px 0;
+        margin: 0 auto;
+        width: 500px;
         .control-group{
             padding: 20px 0;
         }
         .control-label{
             color: #999;
-            width:300px;
             padding-right: 30px;
             text-align: right;
             display: inline-block;
+            width: 180px;
         }
         .control-input .input-box{
             height: 20px;

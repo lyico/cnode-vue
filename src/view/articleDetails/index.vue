@@ -111,7 +111,7 @@ export default {
                 if(res.success){
                     this.$router.go(0)
                 }else{
-                    
+                    console.log('回复失败！');
                 }
             })
         },
@@ -120,7 +120,6 @@ export default {
                 accesstoken: this.getToken,
                 topic_id: this.$route.query.id
             }
-            console.log(dataObj)
             if(type === 'collect'){
                 api.topicCollect(dataObj).then(res =>{
                     if(res.success){
