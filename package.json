@@ -2,7 +2,7 @@
     "name": "cnode-vue",
     "version": "1.0.0",
     "description": "A Vue.js project",
-    "author": "chencoder <931835103@qq.com>",
+    "author": "chenbeta <beta_king@163.com>",
     "private": true,
     "scripts": {
         "dev": "node build/dev-server.js",
